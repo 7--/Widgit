@@ -3,15 +3,82 @@
 }
 
 <!DOCTYPE html>
-
+@model List<Widgit.Domain.Models.Item>
 <html>
 <head>
   <meta name="viewport" content="width=device-width" />
   <title></title>
 </head>
 <body>
-  <div>
-    Hello
-  </div>
+
+  @for (int i = 0; i < Model.Count; i++)
+  {
+    <p>
+      @Html.DisplayFor(m => Model[i].Name)
+      @Html.DisplayFor(m => Model[i].Price)
+      @if (Model[i].OnSale == true)
+      {
+        <label>On Sale!</label>
+      }
+    </p>
+
+    using (Html.BeginForm())
+    {
+      <p>
+        @Html.HiddenFor(m => m[i].Name)
+        @Html.HiddenFor(m => m[i].Price)
+        @Html.HiddenFor(m => m[i].OnSale)
+
+        @Html.DropDownList("DropDownQuantity", "Select Quantity")
+        @Html.DropDownList("DropDownStates", "Select State")
+        @Html.HiddenFor(m => m[i].OnSale)
+        @*@Html.DropDownListFor("DropDownQuantity", m => m[i].Quantity, "Select Quantity")*@
+        @*@Html.DropDownList("itemStatus", new SelectList(Model.lstSelectList, "Value", "Text", item.StatusCode))*@
+
+
+        @*@Html.DropDownListFor(m => m[i].DropDownQuantity, Model[i].Quantity, "Select Quantity")*@
+      </p>
+      <p>
+        <input type="submit" value="Calculate" />
+      </p>
+      if (@HttpContext.Current.Request.QueryString["FinalPrice"] != null)
+      {
+        <text>Total: $</text>@HttpContext.Current.Request.QueryString["FinalPrice"]
+
+      }
+    }
+  }
+
+  @*<div>
+
+    @Model.Name
+      $@Model.Price
+      @if (@Model.OnSale == true)
+      {
+        <label>On Sale!</label>
+      }
+
+      <br />
+      @using (Html.BeginForm())
+      {
+        <p>
+          @Html.HiddenFor(m => m.Name)
+          @Html.HiddenFor(m => m.Price)
+          @Html.HiddenFor(m => m.OnSale)
+          @Html.DropDownListFor(m => m.DropDownQuantity, Model.Quantity, "Select Quantity")
+        </p>
+        <p>
+          @Html.DropDownListFor(m => m.DropDownStates, Model.States, "Select State")
+        </p>
+          <p>
+            <input type="submit" value="Calculate" />
+          </p>
+      }
+      @if (@HttpContext.Current.Request.QueryString["FinalPrice"] != null)
+      {
+        <text>Total: $</text>@HttpContext.Current.Request.QueryString["FinalPrice"]
+
+      }
+  </div>*@
 </body>
 </html>

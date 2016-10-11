@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Widgits";
+}
+
+<h2>Widgits</h2>
+
+@{
+  Html.RenderPartial("_Widgit", new Widgit.Domain.Models.Item
+  {
+    Name="Lamp",
+    Price=39.99m,
+    OnSale=true
+  });
+  Html.RenderPartial("_Widgit", new Widgit.Domain.Models.Item
+  {
+    Name = "Microwave",
+    Price = 59.99m,
+    OnSale = true
+  });
+}
+

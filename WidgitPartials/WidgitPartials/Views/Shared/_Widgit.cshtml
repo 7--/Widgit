@@ -1,0 +1,48 @@
+﻿@{
+  Layout = null;
+}
+
+<!DOCTYPE html>
+@model Widgit.Domain.Models.Item
+<html>
+<head>
+  <meta name="viewport" content="width=device-width" />
+  <title></title>
+</head>
+<body>
+
+  <div>
+
+    @Model.Name
+    $@Model.Price
+    @if (@Model.OnSale == true)
+    {
+      <label>On Sale!</label>
+    }
+
+    <br />
+    @using (Html.BeginForm("Post", "Home"))
+    {
+      <p>
+        @Html.HiddenFor(m => m.Name)
+        @Html.HiddenFor(m => m.Price)
+        @Html.HiddenFor(m => m.OnSale)
+        @Html.DropDownListFor(m => m.DropDownQuantity, Model.Quantity, "Select Quantity")
+      </p>
+          <p>
+            @Html.DropDownListFor(m => m.DropDownStates, Model.States, "Select State")
+          </p>
+          <p>
+            <input type="submit" value="Calculate" />
+          </p>
+    }
+    @if (@HttpContext.Current.Request.QueryString["FinalPrice"] != null @*&&
+      @HttpContext.Current.Request.QueryString["Name"].Equals(@Model.Name)*@)
+    {
+      <text>Total: $</text>@HttpContext.Current.Request.QueryString["FinalPrice"]
+
+    }
+  </div>
+</body>
+</html>
+
